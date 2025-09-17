@@ -1,0 +1,49 @@
+<div class="text-white font-bold font-sans text-3xl text-center">SIGN IN</div>
+
+<div class="bg-white flex justify-center items-center p-10 rounded-lg mt-10">
+  <form nz-form [nzLayout]="'vertical'" [formGroup]="loginForm">
+    <nz-form-item>
+      <nz-form-label nzFor="username" nzRequired>User Name:</nz-form-label>
+      <nz-form-control [nzAutoTips]="autoTips.username">
+        <input nz-input formControlName="username" type="text" id="username" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzFor="password" nzRequired>Password:</nz-form-label>
+      <nz-form-control [nzAutoTips]="autoTips.password">
+        <nz-input-group [nzSuffix]="passwordSuffix">
+          <input
+            nz-input
+            formControlName="password"
+            [type]="passwordVisible() ? 'text' : 'password'"
+            id="password"
+          />
+          <ng-template #passwordSuffix>
+            <nz-icon
+              [nzType]="passwordVisible() ? 'eye-invisible' : 'eye'"
+              (click)="passwordVisible.set(!passwordVisible())"
+            ></nz-icon>
+          </ng-template>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <div class="flex flex-col gap-3 mt-4">
+      <button
+        nz-button
+        nzType="primary"
+        [disabled]="!loginForm.valid"
+        class="w-full"
+        (click)="submitForm()"
+      >
+        Log in
+      </button>
+      <div>
+        or
+        <span class="text-blue-500 cursor-pointer" (click)="navigateToRegister()"
+          >Register new account</span
+        >
+      </div>
+    </div>
+  </form>
+</div>

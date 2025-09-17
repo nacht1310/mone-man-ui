@@ -1,0 +1,65 @@
+import { Component, OnDestroy, signal } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, UntypedFormGroup, Validators } from '@angular/forms';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
+import { ROUTE } from '../../../shared/const.route';
+
+@Component({
+  selector: 'app-login',
+  imports: [NzFormModule, NzInputModule, ReactiveFormsModule, NzButtonModule, NzIconModule],
+  templateUrl: './login.component.html',
+})
+export class Login implements OnDestroy {
+  // Form Configuration
+  loginForm!: UntypedFormGroup;
+  autoTips = {
+    username: { default: { required: 'Please input your user name!' } },
+    password: { default: { required: 'Please input your password!' } },
+  };
+
+  // Password visibility toggle
+  passwordVisible = signal(false);
+
+  // Destroy subject for unsubscribing
+  private destroy$ = new Subject<void>();
+
+  constructor(private _formBuilder: FormBuilder, private _router: Router) {
+    this.initForm();
+  }
+
+  // Lifecycle hooks
+  ngOnDestroy(): void {
+    // Cleanup logic if needed
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  // Form submission handler
+  submitForm(): void {
+    Object.values(this.loginForm.controls).forEach((control) => {
+      control.markAsTouched();
+      control.updateValueAndValidity();
+    });
+
+    if (!this.loginForm.valid) {
+      return;
+    }
+  }
+
+  // Navigation handler
+  navigateToRegister(): void {
+    this._router.navigate([ROUTE.AUTH.REGISTER]);
+  }
+
+  // Form setup
+  initForm(): void {
+    this.loginForm = this._formBuilder.group({
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+    });
+  }
+}
