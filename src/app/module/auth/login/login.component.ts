@@ -4,9 +4,11 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { ROUTE } from '../../../shared/const.route';
+import { AuthService } from '../auth.service';
+import { LocalStorage } from '../../../common/service/local-storage';
 
 @Component({
   selector: 'app-login',
@@ -17,9 +19,10 @@ export class Login implements OnDestroy {
   // Form Configuration
   loginForm!: UntypedFormGroup;
   autoTips = {
-    username: { default: { required: 'Please input your user name!' } },
+    userName: { default: { required: 'Please input your user name!' } },
     password: { default: { required: 'Please input your password!' } },
   };
+  loading = signal(false);
 
   // Password visibility toggle
   passwordVisible = signal(false);
@@ -27,7 +30,12 @@ export class Login implements OnDestroy {
   // Destroy subject for unsubscribing
   private destroy$ = new Subject<void>();
 
-  constructor(private _formBuilder: FormBuilder, private _router: Router) {
+  constructor(
+    private _formBuilder: FormBuilder,
+    private _router: Router,
+    private _authService: AuthService,
+    private _localStorageService: LocalStorage
+  ) {
     this.initForm();
   }
 
@@ -45,9 +53,24 @@ export class Login implements OnDestroy {
       control.updateValueAndValidity();
     });
 
-    if (!this.loginForm.valid) {
+    if (this.loginForm.invalid) {
       return;
     }
+
+    this.loading.set(true);
+    this._authService
+      .login(this.loginForm.value)
+      .pipe(
+        takeUntil(this.destroy$),
+        tap({
+          next: (token: string) => {
+            this.loading.set(false);
+            this._localStorageService.setAuthToken(token);
+          },
+          error: () => this.loading.set(false),
+        })
+      )
+      .subscribe();
   }
 
   // Navigation handler
@@ -58,7 +81,7 @@ export class Login implements OnDestroy {
   // Form setup
   initForm(): void {
     this.loginForm = this._formBuilder.group({
-      username: ['', [Validators.required]],
+      userName: ['', [Validators.required]],
       password: ['', [Validators.required]],
     });
   }

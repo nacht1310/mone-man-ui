@@ -3,9 +3,9 @@
 <div class="bg-white flex justify-center items-center p-10 rounded-lg mt-10">
   <form nz-form [nzLayout]="'vertical'" [formGroup]="loginForm">
     <nz-form-item>
-      <nz-form-label nzFor="username" nzRequired>User Name:</nz-form-label>
-      <nz-form-control [nzAutoTips]="autoTips.username">
-        <input nz-input formControlName="username" type="text" id="username" />
+      <nz-form-label nzFor="userName" nzRequired>User Name:</nz-form-label>
+      <nz-form-control [nzAutoTips]="autoTips.userName">
+        <input nz-input formControlName="userName" type="text" id="userName" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
@@ -32,7 +32,7 @@
       <button
         nz-button
         nzType="primary"
-        [disabled]="!loginForm.valid"
+        [disabled]="loginForm.invalid || loading()"
         class="w-full"
         (click)="submitForm()"
       >
