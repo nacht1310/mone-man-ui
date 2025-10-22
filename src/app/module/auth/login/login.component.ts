@@ -15,7 +15,7 @@ import { LocalStorage } from '../../../common/service/local-storage';
   imports: [NzFormModule, NzInputModule, ReactiveFormsModule, NzButtonModule, NzIconModule],
   templateUrl: './login.component.html',
 })
-export class Login implements OnDestroy {
+export class Login {
   // Form Configuration
   loginForm!: UntypedFormGroup;
   autoTips = {
@@ -27,9 +27,6 @@ export class Login implements OnDestroy {
   // Password visibility toggle
   passwordVisible = signal(false);
 
-  // Destroy subject for unsubscribing
-  private destroy$ = new Subject<void>();
-
   constructor(
     private _formBuilder: FormBuilder,
     private _router: Router,
@@ -37,13 +34,6 @@ export class Login implements OnDestroy {
     private _localStorageService: LocalStorage
   ) {
     this.initForm();
-  }
-
-  // Lifecycle hooks
-  ngOnDestroy(): void {
-    // Cleanup logic if needed
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   // Form submission handler
@@ -61,11 +51,10 @@ export class Login implements OnDestroy {
     this._authService
       .login(this.loginForm.value)
       .pipe(
-        takeUntil(this.destroy$),
         tap({
-          next: (token: string) => {
+          next: (value: { token: string }) => {
             this.loading.set(false);
-            this._localStorageService.setAuthToken(token);
+            this._localStorageService.setAuthToken(value.token);
           },
           error: () => this.loading.set(false),
         })

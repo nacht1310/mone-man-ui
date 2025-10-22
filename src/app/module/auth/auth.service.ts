@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API } from '../../shared/const.api';
+import { ILoginRequest, IRegisterRequest } from './auth.types';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,11 @@ import { API } from '../../shared/const.api';
 export class AuthService {
   private httpClient = inject(HttpClient);
 
-  login(userValue: { userName: string; password: string }): Observable<string> {
-    return this.httpClient.post<string>(API.LOGIN, userValue);
+  login(userValue: ILoginRequest): Observable<{ token: string }> {
+    return this.httpClient.post<{ token: string }>(API.LOGIN, userValue);
+  }
+
+  register(value: IRegisterRequest): Observable<string> {
+    return this.httpClient.post<string>(API.REGISTER, value);
   }
 }

@@ -1,13 +1,16 @@
-<div class="text-white font-bold font-sans text-3xl text-center">SIGN IN</div>
+<div class="text-white font-bold font-sans text-3xl text-center">LOG IN</div>
 
 <div class="bg-white flex justify-center items-center p-10 rounded-lg mt-10">
   <form nz-form [nzLayout]="'vertical'" [formGroup]="loginForm">
+    <!-- User Name Form Item -->
     <nz-form-item>
       <nz-form-label nzFor="userName" nzRequired>User Name:</nz-form-label>
       <nz-form-control [nzAutoTips]="autoTips.userName">
         <input nz-input formControlName="userName" type="text" id="userName" />
       </nz-form-control>
     </nz-form-item>
+
+    <!-- Password Form Item -->
     <nz-form-item>
       <nz-form-label nzFor="password" nzRequired>Password:</nz-form-label>
       <nz-form-control [nzAutoTips]="autoTips.password">
@@ -28,6 +31,7 @@
       </nz-form-control>
     </nz-form-item>
 
+    <!-- Submit Button -->
     <div class="flex flex-col gap-3 mt-4">
       <button
         nz-button
