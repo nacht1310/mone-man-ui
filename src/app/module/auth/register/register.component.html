@@ -1,1 +1,98 @@
-<p>register works!</p>
+<div class="text-white font-bold font-sans text-3xl text-center">REGISTER</div>
+
+<div class="bg-white flex justify-center items-center p-10 rounded-lg mt-10">
+  <form nz-form [nzLayout]="'vertical'" [formGroup]="registerForm">
+    <!-- User Name Form Item -->
+    <nz-form-item>
+      <nz-form-label nzFor="userName" nzRequired>User Name:</nz-form-label>
+      <nz-form-control [nzAutoTips]="autoTips.userName">
+        <input nz-input formControlName="userName" type="text" id="userName" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Password Form Item -->
+    <nz-form-item>
+      <nz-form-label nzFor="password" nzRequired>Password:</nz-form-label>
+      <nz-form-control [nzAutoTips]="autoTips.password">
+        <nz-input-group [nzSuffix]="passwordSuffix">
+          <input
+            nz-input
+            formControlName="password"
+            [type]="passwordVisible().password ? 'text' : 'password'"
+            id="password"
+          />
+          <ng-template #passwordSuffix>
+            <nz-icon
+              [nzType]="passwordVisible().password ? 'eye-invisible' : 'eye'"
+              (click)="
+                passwordVisible.set({
+                  password: !passwordVisible().password,
+                  confirmPassword: passwordVisible().confirmPassword
+                })
+              "
+            ></nz-icon>
+          </ng-template>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Confirm Password Form Item -->
+    <nz-form-item>
+      <nz-form-label nzFor="confirmPassword" nzRequired>Confirm Password:</nz-form-label>
+      <nz-form-control [nzAutoTips]="autoTips.confirmPassword">
+        <nz-input-group [nzSuffix]="confirmPasswordSuffix">
+          <input
+            nz-input
+            formControlName="confirmPassword"
+            [type]="passwordVisible().confirmPassword ? 'text' : 'password'"
+            id="confirmPassword"
+          />
+
+          <ng-template #confirmPasswordSuffix>
+            <nz-icon
+              [nzType]="passwordVisible().confirmPassword ? 'eye-invisible' : 'eye'"
+              (click)="
+                passwordVisible.set({
+                  password: passwordVisible().password,
+                  confirmPassword: !passwordVisible().confirmPassword
+                })
+              "
+            ></nz-icon>
+          </ng-template>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- First Name Form Item -->
+    <nz-form-item>
+      <nz-form-label nzFor="firstName">First Name:</nz-form-label>
+      <nz-form-control>
+        <input nz-input formControlName="firstName" type="text" id="firstName" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Last Name Form Item -->
+    <nz-form-item>
+      <nz-form-label nzFor="lastName">Last Name:</nz-form-label>
+      <nz-form-control>
+        <input nz-input formControlName="lastName" type="text" id="lastName" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Submit Form Button -->
+    <div class="flex flex-col gap-3 mt-4">
+      <button
+        nz-button
+        nzType="primary"
+        [disabled]="registerForm.invalid || loading()"
+        class="w-full"
+        (click)="submitForm()"
+      >
+        Register
+      </button>
+      <span class="text-blue-500 cursor-pointer" (click)="navigateToLogin()"
+        >Back to login page</span
+      >
+    </div>
+  </form>
+</div>
