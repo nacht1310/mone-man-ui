@@ -55,6 +55,7 @@ export class Login {
           next: (value: { token: string }) => {
             this.loading.set(false);
             this._localStorageService.setAuthToken(value.token);
+            this.navigateToPortal();
           },
           error: () => this.loading.set(false),
         })
@@ -65,6 +66,10 @@ export class Login {
   // Navigation handler
   navigateToRegister(): void {
     this._router.navigate([ROUTE.AUTH.REGISTER]);
+  }
+
+  navigateToPortal(): void {
+    this._router.navigate([ROUTE.PORTAL]);
   }
 
   // Form setup
