@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { AuthLayout } from './common/layout/auth-layout/auth-layout.component';
 import { ROUTE } from './shared/const.route';
+import { authCanActivate } from './common/guard/auth.guard';
 
 export const routes: Routes = [
   {
@@ -10,6 +11,7 @@ export const routes: Routes = [
   },
   {
     path: ROUTE.PORTAL,
+    canActivate: [authCanActivate],
     children: [
       {
         path: '',
