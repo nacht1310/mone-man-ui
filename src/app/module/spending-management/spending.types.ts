@@ -9,6 +9,15 @@ export interface SpendingData {
   updatedAt: string;
 }
 
+export interface SpendingReturnData {
+  data: SpendingData[];
+  totalCount: number;
+  page: number;
+  size: number;
+  sortField: keyof SpendingData;
+  sortDirection: 'asc' | 'desc';
+}
+
 export interface CreateSpendingPayload {
   categoryId: string;
   amount: number;
@@ -18,7 +27,6 @@ export interface CreateSpendingPayload {
 
 export interface SpendingQueryParams {
   categoryIds?: Array<number>;
-  userId?: number;
   dateStart?: number;
   dateEnd?: number;
   page: number;

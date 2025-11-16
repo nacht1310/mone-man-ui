@@ -1,1 +1,64 @@
-<p>spending-management works!</p>
+<div class="flex flex-col gap-4 p-10">
+  <div class="flex justify-between text-2xl font-semibold">
+    Spending Management
+    <button nz-button><nz-icon nzType="plus" nzTheme="outline" /> Add Spending</button>
+  </div>
+
+  <nz-table
+    [nzData]="spendingData()"
+    nzShowSizeChanger
+    [nzTotal]="totalCount()"
+    [nzShowTotal]="total"
+    (nzQueryParams)="handleQueryParamsChanged($event)"
+  >
+    <thead>
+      <tr>
+        @for(key of tableColumns(); track key.name) {
+        <th
+          [nzSortOrder]="key.sortOrder"
+          [nzSortDirections]="key.sortDirections"
+          [nzSortFn]="true"
+          [nzColumnKey]="key.name"
+        >
+          {{ key.displayName }}
+        </th>
+        }
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @for(data of spendingData(); track data.id) {
+      <tr>
+        @for(key of tableColumns(); track key.name) {
+        <td>{{ data[key.name] }}</td>
+        }
+        <td class="flex gap-2">
+          <button nz-button nz-tooltip nzTooltipTitle="Edit">
+            <nz-icon nzType="edit" nzTheme="outline" />
+          </button>
+          <button
+            nz-button
+            nzDanger
+            nz-tooltip
+            nzTooltipTitle="Delete"
+            nz-popconfirm
+            nzPopconfirmTitle="Are you sure delete this spending record?"
+            (nzOnConfirm)="handleDeleteSpending(data.id)"
+          >
+            <nz-icon nzType="delete" nzTheme="outline" />
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </nz-table>
+
+  <ng-template #total let-total class="text-lg">
+    Total
+    <span class="font-semibold">
+      {{ total }}
+    </span>
+    items
+  </ng-template>
+</div>
