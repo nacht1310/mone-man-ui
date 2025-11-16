@@ -8,7 +8,7 @@ import { ILoginRequest, IRegisterRequest } from './auth.types';
   providedIn: 'root',
 })
 export class AuthService {
-  private httpClient = inject(HttpClient);
+  private readonly httpClient = inject(HttpClient);
 
   login(userValue: ILoginRequest): Observable<{ token: string }> {
     return this.httpClient.post<{ token: string }>(API.LOGIN, userValue);

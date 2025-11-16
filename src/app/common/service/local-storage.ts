@@ -11,4 +11,8 @@ export class LocalStorage {
   setAuthToken(token: string): void {
     localStorage.setItem('authToken', token);
   }
+
+  removeAuthToken(): void {
+    localStorage.removeItem('authToken');
+  }
 }

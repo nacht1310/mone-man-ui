@@ -34,6 +34,7 @@ export class Login {
     private _localStorageService: LocalStorage
   ) {
     this.initForm();
+    this._localStorageService.removeAuthToken();
   }
 
   // Form submission handler
