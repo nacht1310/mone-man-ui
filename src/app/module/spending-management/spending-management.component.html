@@ -1,7 +1,9 @@
 <div class="flex flex-col gap-4 p-10">
   <div class="flex justify-between text-2xl font-semibold">
     Spending Management
-    <button nz-button><nz-icon nzType="plus" nzTheme="outline" /> Add Spending</button>
+    <button nz-button (click)="openAddEditModal()">
+      <nz-icon nzType="plus" nzTheme="outline" /> Add Spending
+    </button>
   </div>
 
   <nz-table
@@ -34,7 +36,7 @@
         <td>{{ data[key.name] }}</td>
         }
         <td class="flex gap-2">
-          <button nz-button nz-tooltip nzTooltipTitle="Edit">
+          <button nz-button nz-tooltip nzTooltipTitle="Edit" (click)="openAddEditModal(data.id)">
             <nz-icon nzType="edit" nzTheme="outline" />
           </button>
           <button

@@ -3,11 +3,16 @@ export interface SpendingData {
   userId: number;
   categoryId: number;
   amount: number;
-  date: string;
+  date: number;
   description?: string;
   createdAt: string;
   updatedAt: string;
 }
+
+export type DisplaySpendingData = Omit<SpendingData, 'date' | 'categoryId'> & {
+  date: string;
+  category: string;
+};
 
 export interface SpendingReturnData {
   data: SpendingData[];
@@ -18,12 +23,10 @@ export interface SpendingReturnData {
   sortDirection: 'asc' | 'desc';
 }
 
-export interface CreateSpendingPayload {
-  categoryId: string;
-  amount: number;
-  date: string;
-  description?: string;
-}
+export type CreateSpendingPayload = Pick<
+  SpendingData,
+  'amount' | 'categoryId' | 'date' | 'description'
+>;
 
 export interface SpendingQueryParams {
   categoryIds?: Array<number>;
@@ -33,4 +36,13 @@ export interface SpendingQueryParams {
   size: number;
   sortDirection?: 'asc' | 'desc';
   sortField: keyof SpendingData;
+}
+
+export interface CategoryData {
+  id: number;
+  name: string;
+  keywords: string[];
+  isDefault: boolean;
+  createdAt: string;
+  updatedAt: string;
 }

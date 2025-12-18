@@ -1,14 +1,14 @@
-import { Component, OnDestroy, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, UntypedFormGroup, Validators } from '@angular/forms';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { Subject, takeUntil, tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { tap } from 'rxjs';
+import { LocalStorage } from '../../../common/service/local-storage';
 import { ROUTE } from '../../../shared/const.route';
 import { AuthService } from '../auth.service';
-import { LocalStorage } from '../../../common/service/local-storage';
 
 @Component({
   selector: 'app-login',

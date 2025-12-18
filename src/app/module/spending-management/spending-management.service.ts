@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { API } from '../../shared/const.api';
 import {
+  CategoryData,
   CreateSpendingPayload,
   SpendingData,
   SpendingQueryParams,
@@ -27,6 +28,10 @@ export class SpendingManagementService {
     return this._httpClient.get<SpendingReturnData>(API.SPENDING_MANAGEMENT.LIST, { params });
   }
 
+  getSpendingDetail(id: number) {
+    return this._httpClient.get<SpendingData>(API.SPENDING_MANAGEMENT.DETAIL(id));
+  }
+
   createSpending(data: CreateSpendingPayload): Observable<SpendingData> {
     return this._httpClient.post<SpendingData>(API.SPENDING_MANAGEMENT.CREATE, data);
   }
@@ -37,5 +42,9 @@ export class SpendingManagementService {
 
   deleteSpending(id: number): Observable<SpendingData> {
     return this._httpClient.delete<SpendingData>(API.SPENDING_MANAGEMENT.DELETE(id));
+  }
+
+  getCategories(): Observable<CategoryData[]> {
+    return this._httpClient.get<CategoryData[]>(API.CATEGORY);
   }
 }
