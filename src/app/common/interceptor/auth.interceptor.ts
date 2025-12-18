@@ -36,7 +36,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         router.navigate([ROUTE.AUTH.LOGIN]);
       }
 
-      messageService.error(error.error.message, {});
+      messageService.error(error.error.message ?? 'An unknown error occurred!');
 
       return throwError(() => error);
     })
