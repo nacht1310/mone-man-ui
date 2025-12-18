@@ -9,4 +9,5 @@ export const API = {
     DELETE: (id: number) => `spending/${id}`,
     UPDATE: (id: number) => `spending/${id}`,
   },
+  CATEGORY: 'category/all',
 };

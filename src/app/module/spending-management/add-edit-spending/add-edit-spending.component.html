@@ -1,0 +1,38 @@
+<form nz-form [formGroup]="form" nzLayout="vertical" (submit)="submitForm()" nzGutter="1">
+  <nz-form-item>
+    <nz-form-label nzFor="amount" nzRequired>Amount</nz-form-label>
+    <nz-form-control nzFlex="auto" [nzAutoTips]="errorTips['amount']">
+      <nz-input-number class="w-full" id="amount" formControlName="amount" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="categoryId" nzRequired>Category</nz-form-label>
+    <nz-form-control nzFlex="auto" [nzAutoTips]="errorTips['categoryId']">
+      <nz-select
+        id="categoryId"
+        formControlName="categoryId"
+        nzAllowClear
+        nzShowSearch
+        [nzOptions]="categoryOptionList()"
+      ></nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="date" nzRequired>Date</nz-form-label>
+    <nz-form-control nzFlex="auto" [nzAutoTips]="errorTips['date']">
+      <nz-date-picker class="w-full" id="date" formControlName="date"></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="description">Description</nz-form-label>
+    <nz-form-control nzFlex="auto">
+      <textarea nz-input name="description" id="description" formControlName="description">
+      </textarea>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<div *nzModalFooter>
+  <button nz-button nzType="default" (click)="destroyModal()">Cancel</button>
+  <button nz-button nzType="primary" (click)="submitForm()">Submit</button>
+</div>
